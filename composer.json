@@ -1,0 +1,25 @@
+{
+  "name": "bitrix-expert/niceaccess",
+  "description": "",
+  "keywords": ["bitrix", "access"],
+  "type": "library",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/bitrix-expert/niceaccess/issues",
+    "source": "https://github.com/bitrix-expert/niceaccess/",
+    "wiki": "https://github.com/bitrix-expert/niceaccess/wiki"
+  },
+  "authors": [
+    {
+      "name": "Nik Samokhvalov",
+      "email": "nik@samokhvalov.info"
+    }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "monolog/monolog": "1"
+  },
+  "autoload": {
+    "psr-4": {"Bex\\Monolog\\": "src/"}
+  }
+}
