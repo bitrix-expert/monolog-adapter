@@ -1,13 +1,13 @@
 {
-  "name": "bitrix-expert/monolog",
+  "name": "bitrix-expert/monolog-adapter",
   "description": "",
   "keywords": ["bitrix", "access"],
   "type": "library",
   "license": "MIT",
   "support": {
-    "issues": "https://github.com/bitrix-expert/monolog/issues",
-    "source": "https://github.com/bitrix-expert/monolog/",
-    "wiki": "https://github.com/bitrix-expert/monolog/wiki"
+    "issues": "https://github.com/bitrix-expert/monolog-adapter/issues",
+    "source": "https://github.com/bitrix-expert/monolog-adapter/",
+    "wiki": "https://github.com/bitrix-expert/monolog-adapter/wiki"
   },
   "authors": [
     {
