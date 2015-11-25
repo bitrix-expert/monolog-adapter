@@ -9,8 +9,6 @@ namespace Bex\Monolog\Handler;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
-use Monolog\Processor\WebProcessor;
-use Bex\Monolog\Processor\BitrixProcessor;
 use Bitrix\Main\ArgumentNullException;
 
 /**
@@ -18,8 +16,9 @@ use Bitrix\Main\ArgumentNullException;
  */
 class BitrixHandler extends AbstractProcessingHandler
 {
-    private $event;
-    private $module;
+    protected $event;
+    protected $module;
+    protected $siteId;
 
     /**
      * @param string $event Type of event in the event log.
@@ -33,27 +32,20 @@ class BitrixHandler extends AbstractProcessingHandler
     {
         parent::__construct($level, $bubble);
 
-        $this->setEvent($event);
-        $this->setModule($module);
-        $this->pushProcessor(new WebProcessor());
-        $this->pushProcessor(new BitrixProcessor());
+        $this->event = $event;
+        $this->module = $module;
     }
 
     protected function write(array $record)
     {
-        \CEventLog::Add(array(
-            'SEVERITY' => static::toBitrixLevel($record['level']),
-            'AUDIT_TYPE_ID' => $this->getEvent(),
-            'MODULE_ID' => $this->getModule(),
-            'ITEM_ID' => isset($record['context']['ITEM_ID']) ? $record['context']['ITEM_ID'] : 'UNKNOWN',
-            'REMOTE_ADDR' => $record['extra']['ip'],
-            'USER_AGENT' => $record['extra']['user_agent'],
-            'REQUEST_URI' => $record['extra']['url'],
-            'SITE_ID' => $record['extra']['site_id'],
-            'USER_ID' => $record['extra']['user_id'],
-            'GUEST_ID' => $record['extra']['guest_id'],
-            'DESCRIPTION' => $record['message'],
-        ));
+        \CEventLog::Log(
+            static::toBitrixLevel($record['level']),
+            $this->event,
+            $this->module,
+            (isset($record['context']['ITEM_ID'])) ? $record['context']['ITEM_ID'] : null,
+            $record['message'],
+            $this->siteId
+        );
     }
 
     public function setEvent($event)
@@ -61,33 +53,22 @@ class BitrixHandler extends AbstractProcessingHandler
         $this->event = $event;
     }
 
-    /**
-     * @return string
-     */
-    public function getEvent()
-    {
-        return ($this->event) ? $this->event : 'UNKNOWN';
-    }
-
     public function setModule($module)
     {
         $this->module = $module;
     }
 
-    /**
-     * @return string
-     */
-    public function getModule()
+    public function setSite($siteId)
     {
-        return ($this->module) ? $this->module: 'UNKNOWN';
+        $this->siteId = $siteId;
     }
-
+    
     /**
-     * Converts PSR-3 levels to Bitrix ones if necessary.
+     * Converts Monolog levels to Bitrix ones if necessary.
      *
      * @param int $level Level number.
      *
-     * @return string
+     * @return string|bool
      */
     public static function toBitrixLevel($level)
     {
@@ -107,6 +88,6 @@ class BitrixHandler extends AbstractProcessingHandler
             return $levels[$level];
         }
 
-        return 'UNKNOWN';
+        return false;
     }
 }
