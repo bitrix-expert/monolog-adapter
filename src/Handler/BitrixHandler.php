@@ -72,7 +72,24 @@ class BitrixHandler extends AbstractProcessingHandler
      */
     public static function toBitrixLevel($level)
     {
-        $levels = array(
+        $levels = static::logLevels();
+
+        if (isset($levels[$level]))
+        {
+            return $levels[$level];
+        }
+
+        return false;
+    }
+
+    /**
+     * Translates Monolog log levels to Bitrix levels.
+     *
+     * @return array
+     */
+    public static function logLevels()
+    {
+        return array(
             Logger::DEBUG => 'DEBUG',
             Logger::INFO => 'INFO',
             Logger::NOTICE => 'WARNING',
@@ -82,12 +99,5 @@ class BitrixHandler extends AbstractProcessingHandler
             Logger::ALERT => 'ERROR',
             Logger::EMERGENCY => 'ERROR',
         );
-
-        if (isset($levels[$level]))
-        {
-            return $levels[$level];
-        }
-
-        return false;
     }
 }
