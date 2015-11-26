@@ -9,6 +9,7 @@ namespace Bex\Monolog\Handler;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
+use Bex\Monolog\Formatter\BitrixFormatter;
 use Bitrix\Main\ArgumentNullException;
 
 /**
@@ -36,6 +37,9 @@ class BitrixHandler extends AbstractProcessingHandler
         $this->module = $module;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function write(array $record)
     {
         \CEventLog::Log(
@@ -61,6 +65,14 @@ class BitrixHandler extends AbstractProcessingHandler
     public function setSite($siteId)
     {
         $this->siteId = $siteId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultFormatter()
+    {
+        return new BitrixFormatter();
     }
     
     /**
