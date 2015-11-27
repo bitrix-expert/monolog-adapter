@@ -19,11 +19,21 @@ class BitrixFormatter implements FormatterInterface
      */
     public function format(array $record)
     {
+        $record['item_id'] = null;
+        $record['level'] = static::toBitrixLevel($record['level']);
+        
         if (!empty($record['context']))
         {
             foreach ($record['context'] as $name => $value)
             {
-                $record['message'] .= "<br><b>" . $name . '</b>: ' . $value;
+                if ($name === 'item_id')
+                {
+                    $record['item_id'] = $value;
+                }
+                else
+                {
+                    $record['message'] .= "<br><b>" . $name . '</b>: ' . $value;
+                }
             }
         }
 
@@ -43,5 +53,43 @@ class BitrixFormatter implements FormatterInterface
         }
 
         return $formatted;
+    }
+
+    /**
+     * Converts Monolog levels to Bitrix ones if necessary.
+     *
+     * @param int $level Level number.
+     *
+     * @return string|bool
+     */
+    public static function toBitrixLevel($level)
+    {
+        $levels = static::logLevels();
+
+        if (isset($levels[$level]))
+        {
+            return $levels[$level];
+        }
+
+        return false;
+    }
+
+    /**
+     * Translates Monolog log levels to Bitrix levels.
+     *
+     * @return array
+     */
+    public static function logLevels()
+    {
+        return array(
+            Logger::DEBUG => 'DEBUG',
+            Logger::INFO => 'INFO',
+            Logger::NOTICE => 'WARNING',
+            Logger::WARNING => 'WARNING',
+            Logger::ERROR => 'ERROR',
+            Logger::CRITICAL => 'ERROR',
+            Logger::ALERT => 'ERROR',
+            Logger::EMERGENCY => 'ERROR',
+        );
     }
 }

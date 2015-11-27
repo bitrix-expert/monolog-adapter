@@ -17,9 +17,9 @@ use Bitrix\Main\ArgumentNullException;
  */
 class BitrixHandler extends AbstractProcessingHandler
 {
-    protected $event;
-    protected $module;
-    protected $siteId;
+    private $event;
+    private $module;
+    private $siteId;
 
     /**
      * @param string $event Type of event in the event log.
@@ -33,8 +33,8 @@ class BitrixHandler extends AbstractProcessingHandler
     {
         parent::__construct($level, $bubble);
 
-        $this->event = $event;
-        $this->module = $module;
+        $this->setEvent($event);
+        $this->setModule($module);
     }
 
     /**
@@ -43,28 +43,13 @@ class BitrixHandler extends AbstractProcessingHandler
     protected function write(array $record)
     {
         \CEventLog::Log(
-            static::toBitrixLevel($record['level']),
-            $this->event,
-            $this->module,
-            (isset($record['context']['ITEM_ID'])) ? $record['context']['ITEM_ID'] : null,
+            $record['level'],
+            $this->getEvent(),
+            $this->getModule(),
+            $record['item_id'],
             $record['message'],
-            $this->siteId
+            $this->getSite()
         );
-    }
-
-    public function setEvent($event)
-    {
-        $this->event = $event;
-    }
-
-    public function setModule($module)
-    {
-        $this->module = $module;
-    }
-
-    public function setSite($siteId)
-    {
-        $this->siteId = $siteId;
     }
 
     /**
@@ -74,42 +59,34 @@ class BitrixHandler extends AbstractProcessingHandler
     {
         return new BitrixFormatter();
     }
-    
-    /**
-     * Converts Monolog levels to Bitrix ones if necessary.
-     *
-     * @param int $level Level number.
-     *
-     * @return string|bool
-     */
-    public static function toBitrixLevel($level)
+
+    public function setEvent($event)
     {
-        $levels = static::logLevels();
-
-        if (isset($levels[$level]))
-        {
-            return $levels[$level];
-        }
-
-        return false;
+        $this->event = $event;
     }
 
-    /**
-     * Translates Monolog log levels to Bitrix levels.
-     *
-     * @return array
-     */
-    public static function logLevels()
+    public function getEvent()
     {
-        return array(
-            Logger::DEBUG => 'DEBUG',
-            Logger::INFO => 'INFO',
-            Logger::NOTICE => 'WARNING',
-            Logger::WARNING => 'WARNING',
-            Logger::ERROR => 'ERROR',
-            Logger::CRITICAL => 'ERROR',
-            Logger::ALERT => 'ERROR',
-            Logger::EMERGENCY => 'ERROR',
-        );
+        return $this->event;
+    }
+
+    public function setModule($module)
+    {
+        $this->module = $module;
+    }
+
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    public function setSite($siteId)
+    {
+        $this->siteId = $siteId;
+    }
+
+    public function getSite()
+    {
+        return $this->siteId;
     }
 }
