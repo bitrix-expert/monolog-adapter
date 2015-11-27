@@ -43,11 +43,11 @@ class BitrixHandler extends AbstractProcessingHandler
     protected function write(array $record)
     {
         \CEventLog::Log(
-            $record['level'],
+            $record['formatted']['level'],
             $this->getEvent(),
             $this->getModule(),
-            $record['item_id'],
-            $record['message'],
+            $record['formatted']['item_id'],
+            $record['formatted']['message'],
             $this->getSite()
         );
     }

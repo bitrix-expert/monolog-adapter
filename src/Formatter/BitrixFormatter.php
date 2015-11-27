@@ -8,6 +8,7 @@
 namespace Bex\Monolog\Formatter;
 
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Logger;
 
 /**
  * @author Nik Samokhvalov <nik@samokhvalov.info>
@@ -21,18 +22,23 @@ class BitrixFormatter implements FormatterInterface
     {
         $record['item_id'] = null;
         $record['level'] = static::toBitrixLevel($record['level']);
-        
+
         if (!empty($record['context']))
         {
-            foreach ($record['context'] as $name => $value)
+            foreach ($record['context'] as $field => $value)
             {
-                if ($name === 'item_id')
+                if ($field === 'item_id')
                 {
                     $record['item_id'] = $value;
                 }
                 else
                 {
-                    $record['message'] .= "<br><b>" . $name . '</b>: ' . $value;
+                    if (is_array($value))
+                    {
+                        $value = var_export($value, true);
+                    }
+
+                    $record['message'] .= '<br><br>' . $field . ': ' . $value;
                 }
             }
         }
