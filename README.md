@@ -9,14 +9,14 @@ Monolog handler and formatter for Bitrix CMS.
 
 ## Install
 
-```
+```bash
 cd path/to/project/root
 composer require bitrix-expert/monolog-adapter
 ```
 
 ## Example
 
-```
+```php
 <?php
 
 use Monolog\Logger;
