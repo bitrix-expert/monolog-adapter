@@ -26,12 +26,20 @@ use Bex\Monolog\Handler\BitrixHandler;
 $logger = new Logger('name');
 
 // Adding handler for write logs to Bitrix Event Log
-$logger->pushHandler(new BitrixHandler('TYPE_FOR_EVENT_LOG', 'vendor.module');
+$logger->pushHandler(new BitrixHandler('TYPE_FOR_EVENT_LOG', 'vendor.module'));
 
-$logger->error('message', [
-    'item_id' => 21
+// Write info message with context. For example: record about invalid message from feedback
+$logger->info('Info message', [
+    'item_id' => 21,
+    'Invalid data' => $addResult->getErrorMessages(), // error savings
+    'Form data' => $formRequest // data from feedback form
 ]);
 ```
+
+The result in the Control Panel of Bitrix:
+
+![Event Log](event-log.png)
+
 
 ## Requirements
 
