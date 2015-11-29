@@ -1,13 +1,12 @@
 {
   "name": "bitrix-expert/monolog-adapter",
-  "description": "",
-  "keywords": ["bitrix", "access"],
+  "description": "Monolog adapter for Bitrix CMS",
+  "keywords": ["bitrix", "monolog", "logger", "log", "psr-3"],
   "type": "library",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/bitrix-expert/monolog-adapter/issues",
-    "source": "https://github.com/bitrix-expert/monolog-adapter/",
-    "wiki": "https://github.com/bitrix-expert/monolog-adapter/wiki"
+    "source": "https://github.com/bitrix-expert/monolog-adapter/"
   },
   "authors": [
     {
