@@ -1,6 +1,6 @@
 <?php
 /**
- * @link https://github.com/bitrix-expert/niceaccess
+ * @link https://github.com/bitrix-expert/monolog-adapter
  * @copyright Copyright © 2015 Nik Samokhvalov
  * @license MIT
  */
@@ -11,6 +11,15 @@ use Monolog\Formatter\FormatterInterface;
 use Monolog\Logger;
 
 /**
+ * Record formatter for event log of Bitrix Control Panel.
+ * 
+ * Context of record will also be written to event log of Bitrix. You can specify ID of item for event log Bitrix 
+ * through key `item_id` in the context of record:
+ * 
+ * ```php
+ * $logger->error('message', array('item_id' => 21));
+ * ```
+ * 
  * @author Nik Samokhvalov <nik@samokhvalov.info>
  */
 class BitrixFormatter implements FormatterInterface
