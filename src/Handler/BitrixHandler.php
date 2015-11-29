@@ -1,6 +1,6 @@
 <?php
 /**
- * @link https://github.com/bitrix-expert/niceaccess
+ * @link https://github.com/bitrix-expert/monolog-adapter
  * @copyright Copyright © 2015 Nik Samokhvalov
  * @license MIT
  */
