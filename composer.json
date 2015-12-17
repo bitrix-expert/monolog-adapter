@@ -16,9 +16,11 @@
   ],
   "require": {
     "php": ">=5.3",
-    "monolog/monolog": "1.*"
+    "monolog/monolog": "1.*",
+    "theorchard/monolog-cascade": "~0.2"
   },
   "autoload": {
-    "psr-4": {"Bex\\Monolog\\": "src/"}
+    "psr-4": {"Bex\\Monolog\\": "src/"},
+    "files": ["src/bootstrap.php"]
   }
 }

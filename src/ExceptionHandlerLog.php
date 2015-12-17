@@ -1,10 +1,13 @@
 <?php
+/**
+ * @link https://github.com/bitrix-expert/monolog-adapter
+ * @copyright Copyright © 2015 Nik Samokhvalov
+ * @license MIT
+ */
 
 namespace Bex\Monolog;
 
-use Bitrix\Main\Application;
 use Bitrix\Main\ArgumentNullException;
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
@@ -19,31 +22,12 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
      */
     public function initialize(array $options)
     {
-        if (!isset($options['channel']))
+        if (!isset($options['logger']))
         {
-            throw new ArgumentNullException('channel');
+            throw new ArgumentNullException('logger');
         }
         
-        if (!isset($options['stream']))
-        {
-            throw new ArgumentNullException('stream');
-        }
-                
-        $this->logger = new Logger($options['channel'], $this->getHandlers($options));
-    }
-
-    /**
-     * Gets handlers for channel.
-     * 
-     * @param array $options Settings from .settings.php.
-     *
-     * @return array
-     */
-    protected function getHandlers($options)
-    {
-        return [
-            new StreamHandler(Application::getDocumentRoot() . '/' . $options['stream'])
-        ];
+        $this->logger = Loggers::get($options['logger']);
     }
 
     /**
