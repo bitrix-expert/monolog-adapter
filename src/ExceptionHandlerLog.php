@@ -9,6 +9,7 @@ namespace Bex\Monolog;
 
 use Bitrix\Main\ArgumentNullException;
 use Monolog\Logger;
+use Monolog\Registry;
 
 class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
 {
@@ -27,7 +28,7 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
             throw new ArgumentNullException('logger');
         }
         
-        $this->logger = Loggers::get($options['logger']);
+        $this->logger = Registry::getInstance($options['logger']);
     }
 
     /**

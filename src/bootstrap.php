@@ -6,7 +6,7 @@
  */
 
 use Bitrix\Main\Config\Configuration;
-use Bex\Monolog\Loggers;
+use Cascade\Cascade;
 
 if (class_exists('\Bitrix\Main\Config\Configuration'))
 {
@@ -14,6 +14,6 @@ if (class_exists('\Bitrix\Main\Config\Configuration'))
     
     if (is_array($config) && !empty($config))
     {
-        Loggers::setConfigs($config);
+        Cascade::fileConfig($config);
     }
 }
