@@ -11,15 +11,17 @@ Monolog adapter for Bitrix CMS:
 * Handler for logger uncaught exceptions of the Bitrix.
 * Configuration loggers with using the `.settings.php`.
 
-## Installation and examples
-
-1. Install the library:
+## Installation
 
 ```bash
 composer require bitrix-expert/monolog-adapter
 ```
 
-2. Configurate the logger in the `.settings.php`:
+## Usage
+
+### Configuring your loggers
+
+Configurate the logger in the `.settings.php`:
 
 ```php
 return array(
@@ -63,7 +65,9 @@ return array(
 );
 ```
 
-3. Write logs from your application. For example, write logs when created new message from the feedback form:
+### Write logs
+
+Write logs from your application. For example, write logs when created new message from the feedback form:
 
 ```php
 <?php
