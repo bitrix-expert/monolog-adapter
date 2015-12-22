@@ -5,7 +5,7 @@
 [![Total Downloads](https://poser.pugx.org/bitrix-expert/monolog-adapter/downloads)](https://packagist.org/packages/bitrix-expert/monolog-adapter) 
 [![License](https://poser.pugx.org/bitrix-expert/monolog-adapter/license)](https://packagist.org/packages/bitrix-expert/monolog-adapter)
 
-Monolog adapter for Bitrix CMS:
+[Monolog](https://github.com/Seldaek/monolog) adapter for Bitrix CMS:
 
 * Bitrix handler and formatter for Monolog.
 * Handler for logger uncaught exceptions of the Bitrix.
