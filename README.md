@@ -1,35 +1,79 @@
-# Monolog for Bitrix CMS
+# Monolog adapter for Bitrix CMS
 
 [![Build Status](https://travis-ci.org/bitrix-expert/monolog-adapter.svg)](https://travis-ci.org/bitrix-expert/monolog-adapter)
 [![Latest Stable Version](https://poser.pugx.org/bitrix-expert/monolog-adapter/v/stable)](https://packagist.org/packages/bitrix-expert/monolog-adapter) 
 [![Total Downloads](https://poser.pugx.org/bitrix-expert/monolog-adapter/downloads)](https://packagist.org/packages/bitrix-expert/monolog-adapter) 
 [![License](https://poser.pugx.org/bitrix-expert/monolog-adapter/license)](https://packagist.org/packages/bitrix-expert/monolog-adapter)
 
-Monolog handler and formatter for Bitrix CMS.
+Monolog adapter for Bitrix CMS:
 
-## Install
+* Bitrix handler and formatter for Monolog.
+* Handler for logger uncaught exceptions of the Bitrix.
+* Configuration loggers with using the `.settings.php`.
+
+## Installation and examples
+
+1. Install the library:
 
 ```bash
-cd path/to/project/root
 composer require bitrix-expert/monolog-adapter
 ```
 
-## Example
+2. Configurate the logger in the `.settings.php`:
+
+```php
+return array(
+    'exception_handling' => array(
+        'value' => array(
+            'log' => array(
+                'class_name' => '\Bex\Monolog\ExceptionHandlerLog',
+                'settings' => array(
+                    'logger' => 'app',
+                ),
+            ),
+        ),
+        'readonly' => false
+    ),
+    'monolog' => array(
+        'value' => array(
+            'handlers' => array(
+                'default' => array(
+                    'class' => '\Monolog\Handler\StreamHandler',
+                    'level' => 'DEBUG',
+                    'stream' => '/path/to/logs/app.log'
+                ),
+                'event_log' => array(
+                    'class' => '\Bex\Monolog\Handler\BitrixHandler',
+                    'level' => 'INFO',
+                    'event' => 'FEEDBACK_NEW_MESSAGE',
+                    'module' => 'vendor.module'
+                ),
+            ),
+            'loggers' => array(
+                'app' => array(
+                    'handlers'=> array('default'),
+                ),
+                'feedback' => array(
+                    'handlers'=> array('event_log'),
+                )
+            )
+        ),
+        'readonly' => false
+    )
+);
+```
+
+3. Write logs from your application. For example, write logs when created new message from the feedback form:
 
 ```php
 <?php
 
-use Monolog\Logger;
-use Bex\Monolog\Handler\BitrixHandler;
+use Monolog\Registry;
 
-// Create a log channel
-$logger = new Logger('name');
+$logger = Registry::getInstance('feedback');
 
-// Adding handler for write logs to Bitrix Event Log
-$logger->pushHandler(new BitrixHandler('TYPE_FOR_EVENT_LOG', 'vendor.module'));
-
-// Write info message with context. For example: record about invalid message from feedback
-$logger->info('Info message', [
+// Write info message with context: invalid message from feedback
+$logger->info('Failed create new message on feedback form', [
     'item_id' => 21,
     'Invalid data' => $addResult->getErrorMessages(), // error savings
     'Form data' => $formRequest // data from feedback form
@@ -39,7 +83,6 @@ $logger->info('Info message', [
 The result in the Control Panel of Bitrix:
 
 ![Event Log](event-log.png)
-
 
 ## Requirements
 
