@@ -46,9 +46,9 @@ return array(
                 ),
                 'feedback_event_log' => array(
                     'class' => '\Bex\Monolog\Handler\BitrixHandler',
-                    'level' => 'INFO',
-                    'event' => 'FEEDBACK_MESSAGES',
-                    'module' => 'vendor.feedback'
+                    'level' => 'DEBUG',
+                    'event' => 'TYPE_FOR_EVENT_LOG',
+                    'module' => 'vendor.module'
                 ),
             ),
             'loggers' => array(
