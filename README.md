@@ -44,11 +44,11 @@ return array(
                     'level' => 'DEBUG',
                     'stream' => '/path/to/logs/app.log'
                 ),
-                'event_log' => array(
+                'feedback_event_log' => array(
                     'class' => '\Bex\Monolog\Handler\BitrixHandler',
                     'level' => 'INFO',
-                    'event' => 'FEEDBACK_NEW_MESSAGE',
-                    'module' => 'vendor.module'
+                    'event' => 'FEEDBACK_MESSAGES',
+                    'module' => 'vendor.feedback'
                 ),
             ),
             'loggers' => array(
@@ -56,7 +56,7 @@ return array(
                     'handlers'=> array('default'),
                 ),
                 'feedback' => array(
-                    'handlers'=> array('event_log'),
+                    'handlers'=> array('feedback_event_log'),
                 )
             )
         ),
