@@ -67,7 +67,8 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
         {
             throw new ArgumentNullException('logger');
         }
-        
+
+        $this->rules = $options['rules'];
         $this->logger = Registry::getInstance($options['logger']);
     }
 
