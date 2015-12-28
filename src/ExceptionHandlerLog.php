@@ -77,7 +77,6 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
      */
     public function write(\Exception $exception, $logType)
     {
-
         foreach ($this->rules as $rule => $condition)
         {
             switch ($rule)
@@ -96,6 +95,7 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
                     break;
             }
         }
+
         $this->logger->emergency($exception->getMessage(), array(
             'exception' => $exception->getTrace(),
             'logType' => $logType
