@@ -33,6 +33,9 @@ use Monolog\Registry;
  *                  'class_name' => '\Bex\Monolog\ExceptionHandlerLog',
  *                  'settings' => array(
  *                      'logger' => 'app',
+ *                      'rules' => array(
+ *					        '!instanceof' => '\Bex\Monolog\UnloggedInterface',
+ *					    )
  *                  ),
  *              ),
  *          ),
@@ -49,6 +52,11 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
      * @var Logger
      */
     protected $logger;
+
+    /**
+     * @var string[]
+     */
+    protected $rules = [];
 
     /**
      * {@inheritdoc}
@@ -68,6 +76,25 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
      */
     public function write(\Exception $exception, $logType)
     {
+
+        foreach ($this->rules as $rule => $condition)
+        {
+            switch ($rule)
+            {
+                case '!instanceof':
+                    if ($exception instanceof $condition)
+                    {
+                        return;
+                    }
+                    break;
+                case 'instanceof':
+                    if (!($exception instanceof $condition))
+                    {
+                        return;
+                    }
+                    break;
+            }
+        }
         $this->logger->emergency($exception->getMessage(), array(
             'exception' => $exception->getTrace(),
             'logType' => $logType

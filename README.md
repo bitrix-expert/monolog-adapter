@@ -31,6 +31,9 @@ return array(
                 'class_name' => '\Bex\Monolog\ExceptionHandlerLog',
                 'settings' => array(
                     'logger' => 'app',
+				    'rules' => array(
+						'!instanceof' => '\Bex\Monolog\UnloggedInterface',
+					)
                 ),
             ),
         ),
@@ -83,6 +86,19 @@ $logger->info('Failed create new message on feedback form', [
     'Form data' => $formRequest // data from feedback form
 ]);
 ```
+
+### Rules
+
+Use rules property for filter logging exceptions by instanceof logic. 
+```php
+<?php
+// blacklist example
+['rules' => ['!instanceof' => '\Bex\Monolog\UnloggedInterface'];
+
+// whitelist example
+['rules' => ['instanceof' => '\Bex\Monolog\LoggedInterface'];
+```
+   
 
 The result in the Control Panel of Bitrix:
 
