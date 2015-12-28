@@ -32,7 +32,7 @@ return array(
                 'settings' => array(
                     'logger' => 'app',
 				    'rules' => array(
-						'!instanceof' => '\Bitrix\Main\SystemException',
+						'!instanceof' => '\Vendor\Exception\UnloggedInterface',
 					)
                 ),
             ),
@@ -93,10 +93,10 @@ Use rules property for filter logging exceptions by instanceof logic.
 ```php
 <?php
 // blacklist example
-['rules' => ['!instanceof' => '\Bitrix\Main\SystemException'];
+['rules' => ['!instanceof' => '\Vendor\Exception\UnloggedInterface'];
 
 // whitelist example
-['rules' => ['instanceof' => '\Bitrix\Main\SystemException'];
+['rules' => ['instanceof' => '\Vendor\Exception\UnloggedInterface'];
 ```
    
 

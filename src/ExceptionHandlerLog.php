@@ -34,7 +34,7 @@ use Monolog\Registry;
  *                  'settings' => array(
  *                      'logger' => 'app',
  *                      'rules' => array(
- *					        '!instanceof' => '\Bitrix\Main\SystemException',
+ *					        '!instanceof' => '\Vendor\Exception\UnloggedInterface',
  *					    )
  *                  ),
  *              ),
