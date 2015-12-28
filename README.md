@@ -32,7 +32,7 @@ return array(
                 'settings' => array(
                     'logger' => 'app',
 				    'rules' => array(
-						'!instanceof' => '\Bex\Monolog\UnloggedInterface',
+						'!instanceof' => '\Bitrix\Main\SystemException',
 					)
                 ),
             ),
@@ -93,10 +93,10 @@ Use rules property for filter logging exceptions by instanceof logic.
 ```php
 <?php
 // blacklist example
-['rules' => ['!instanceof' => '\Bex\Monolog\UnloggedInterface'];
+['rules' => ['!instanceof' => '\Bitrix\Main\SystemException'];
 
 // whitelist example
-['rules' => ['instanceof' => '\Bex\Monolog\LoggedInterface'];
+['rules' => ['instanceof' => '\Bitrix\Main\SystemException'];
 ```
    
 
