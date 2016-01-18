@@ -56,7 +56,7 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
     /**
      * @var string[]
      */
-    protected $rules = [];
+    protected $rules = array();
 
     /**
      * {@inheritdoc}
