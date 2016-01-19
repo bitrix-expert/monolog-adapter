@@ -1,7 +1,7 @@
 <?php
 /**
  * @link https://github.com/bitrix-expert/monolog-adapter
- * @copyright Copyright © 2015 Nik Samokhvalov
+ * @copyright Nik Samokhvalov
  * @license MIT
  */
 
@@ -68,7 +68,11 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
             throw new ArgumentNullException('logger');
         }
 
-        $this->rules = $options['rules'];
+        if (is_array($options['rules']) && !empty($options['rules']))
+        {
+            $this->rules = $options['rules'];
+        }
+        
         $this->logger = Registry::getInstance($options['logger']);
     }
 

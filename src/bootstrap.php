@@ -1,7 +1,7 @@
 <?php
 /**
  * @link https://github.com/bitrix-expert/monolog-adapter
- * @copyright Copyright © 2015 Nik Samokhvalov
+ * @copyright Nik Samokhvalov
  * @license MIT
  */
 
