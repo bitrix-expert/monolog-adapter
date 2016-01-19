@@ -30,10 +30,7 @@ return array(
             'log' => array(
                 'class_name' => '\Bex\Monolog\ExceptionHandlerLog',
                 'settings' => array(
-                    'logger' => 'app',
-				    'rules' => array(
-						'!instanceof' => '\Vendor\Exception\UnloggedInterface',
-					)
+                    'logger' => 'app'
                 ),
             ),
         ),
@@ -68,6 +65,24 @@ return array(
 );
 ```
 
+Use rules property for filter logging uncaught exceptions by instanceof logic:
+```php
+'exception_handling' => array(
+    'value' => array(
+        'log' => array(
+            'class_name' => '\Bex\Monolog\ExceptionHandlerLog',
+            'settings' => array(
+                'logger' => 'app',
+                'rules' => array(
+                    'instanceof' => '\Vendor\Exception\UnloggedInterface', // or opposite: !instanceof
+                )
+            ),
+        ),
+    ),
+    'readonly' => false
+)
+```
+
 ### Write logs
 
 Write logs from your application. For example, write logs when created new message from the feedback form:
@@ -86,19 +101,6 @@ $logger->info('Failed create new message on feedback form', [
     'Form data' => $formRequest // data from feedback form
 ]);
 ```
-
-### Rules
-
-Use rules property for filter logging exceptions by instanceof logic. 
-```php
-<?php
-// blacklist example
-['rules' => ['!instanceof' => '\Vendor\Exception\UnloggedInterface'];
-
-// whitelist example
-['rules' => ['instanceof' => '\Vendor\Exception\UnloggedInterface'];
-```
-   
 
 The result in the Control Panel of Bitrix:
 
