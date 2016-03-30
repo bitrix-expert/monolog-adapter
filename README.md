@@ -83,6 +83,29 @@ Use rules property for filter logging uncaught exceptions by instanceof logic:
 )
 ```
 
+Use context property for change log debug data format:
+```php
+'exception_handling' => array(
+    'value' => array(
+        'log' => array(
+            'class_name' => '\Bex\Monolog\ExceptionHandlerLog',
+            'settings' => array(
+                'logger' => 'app',
+                'context' => function($exception) {
+                     return [
+                         'file' => $exception->getFile(),
+                         'line' => $exception->getLine(),
+                         'trace' => $exception->getTrace(),
+                         'some_param' => $exception->getSomeParam(),
+                     ];
+                 },
+            ),
+        ),
+    ),
+    'readonly' => false
+)
+```
+
 ### Write logs
 
 Write logs from your application. For example, write logs when created new message from the feedback form:
