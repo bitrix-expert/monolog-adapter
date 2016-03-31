@@ -92,12 +92,12 @@ Use context property for change log debug data format:
             'settings' => array(
                 'logger' => 'app',
                 'context' => function($exception) {
-                     return [
+                     return array(
                          'file' => $exception->getFile(),
                          'line' => $exception->getLine(),
                          'trace' => $exception->getTrace(),
                          'some_param' => $exception->getSomeParam(),
-                     ];
+                     );
                  },
             ),
         ),
@@ -118,11 +118,11 @@ use Monolog\Registry;
 $logger = Registry::getInstance('feedback');
 
 // Write info message with context: invalid message from feedback
-$logger->info('Failed create new message on feedback form', [
+$logger->info('Failed create new message on feedback form', array(
     'item_id' => 21,
     'Invalid data' => $addResult->getErrorMessages(), // error savings
     'Form data' => $formRequest // data from feedback form
-]);
+));
 ```
 
 The result in the Control Panel of Bitrix:
