@@ -120,7 +120,8 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
 
         $context = is_callable($this->context) ? call_user_func($this->context, $exception) : null;
 
-        if($context === null) {
+        if ($context === null)
+        {
             $context = array(
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
