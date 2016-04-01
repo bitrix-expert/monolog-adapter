@@ -13,7 +13,7 @@ use Monolog\Registry;
 
 /**
  * Logger of exceptions. Writes uncaught exceptions to the log.
- * 
+ *
  * Register the application logger in the `.settings.php` and add his to `exception_handling`:
  * ```php
  * return array(
@@ -33,6 +33,14 @@ use Monolog\Registry;
  *                  'class_name' => '\Bex\Monolog\ExceptionHandlerLog',
  *                  'settings' => array(
  *                      'logger' => 'app',
+ *                      'context' => function($exception) {
+ *                          return [
+ *                              'file' => $exception->getFile(),
+ *                              'line' => $exception->getLine(),
+ *                              'trace' => $exception->getTrace(),
+ *                              'some_param' => $exception->getSomeParam(),
+ *                          ];
+ *                      },
  *                      'rules' => array(
  *					        '!instanceof' => '\Vendor\Exception\UnloggedInterface',
  *					    )
@@ -43,7 +51,7 @@ use Monolog\Registry;
  *      ),
  * );
  * ```
- * 
+ *
  * @author Nik Samokhvalov <nik@samokhvalov.info>
  */
 class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
@@ -52,6 +60,11 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
      * @var Logger
      */
     protected $logger;
+
+    /**
+     * @var callable
+     */
+    protected $context;
 
     /**
      * @var string[]
@@ -72,7 +85,12 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
         {
             $this->rules = $options['rules'];
         }
-        
+
+        if (is_callable($options['context']))
+        {
+            $this->context = $options['context'];
+        }
+
         $this->logger = Registry::getInstance($options['logger']);
     }
 
@@ -100,9 +118,17 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
             }
         }
 
-        $this->logger->emergency($exception->getMessage(), array(
-            'exception' => $exception->getTrace(),
-            'logType' => $logType
-        ));
+        $context = is_callable($this->context) ? call_user_func($this->context, $exception) : null;
+
+        if($context === null) {
+            $context = array(
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace(),
+                'logType' => $logType
+            );
+        }
+
+        $this->logger->emergency($exception->getMessage(), $context);
     }
 }
