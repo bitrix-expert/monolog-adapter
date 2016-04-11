@@ -101,7 +101,7 @@ Use context property for change log debug data format:
             'class_name' => '\Bex\Monolog\ExceptionHandlerLog',
             'settings' => array(
                 'logger' => 'app',
-                'context' => function($exception) {
+                'context' => function ($exception) {
                      return array(
                          'file' => $exception->getFile(),
                          'line' => $exception->getLine(),
