@@ -13,8 +13,18 @@
 
 ## Installation
 
+Download the library using Composer:
+
 ```bash
 composer require bitrix-expert/monolog-adapter
+```
+
+Write in the `init.php` file:
+
+```php
+<?php
+
+\Bex\Monolog\MonologAdapter::loadConfiguration();
 ```
 
 ## Usage
