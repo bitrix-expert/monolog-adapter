@@ -19,7 +19,7 @@ Download the library using Composer:
 composer require bitrix-expert/monolog-adapter
 ```
 
-Write in the `init.php` file:
+Write in the [`init.php`](https://dev.1c-bitrix.ru/learning/course/?COURSE_ID=43&LESSON_ID=2916) file:
 
 ```php
 <?php
