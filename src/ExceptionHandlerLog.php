@@ -96,7 +96,7 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog
     /**
      * {@inheritdoc}
      */
-    public function write(\Exception $exception, $logType)
+    public function write($exception, $logType)
     {
         foreach ($this->rules as $rule => $condition)
         {
