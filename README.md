@@ -142,4 +142,4 @@ The result in the Control Panel of Bitrix:
 ## Requirements
 
 * PHP >= 5.3
-* Bitrix CMS >= 15.0.2
+* Bitrix CMS >= 16.5.6
