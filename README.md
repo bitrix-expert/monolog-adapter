@@ -93,7 +93,10 @@ Use rules property for filter logging uncaught exceptions by instanceof logic:
 )
 ```
 
-Use context property for change log debug data format:
+Use context property for change log debug data format.
+
+> **WARNING**: this example is using closures and must be placed in `.settings.extra.php`.
+
 ```php
 'exception_handling' => array(
     'value' => array(
