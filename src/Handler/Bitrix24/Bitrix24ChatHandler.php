@@ -32,12 +32,24 @@ class Bitrix24ChatHandler extends Bitrix24Handler
      * @param string $user_id
      * @param string $chat_id
      * @param string $system
+     * @param string $user_login
+     * @param string $user_password
      */
-    public function __construct($level = Logger::DEBUG, $bubble = true,
-        $application_scope = '', $application_id = '', $application_secret = '', $domain = '',
-        $user_id = '', $chat_id = '', $system = "Y")
-    {
-        parent::__construct($level, $bubble, $application_scope, $application_id, $application_secret, $domain);
+    public function __construct(
+        $level = Logger::DEBUG,
+        $bubble = true,
+        $application_scope = '',
+        $application_id = '',
+        $application_secret = '',
+        $domain = '',
+        $user_id = '',
+        $chat_id = '',
+        $system = "Y",
+        $user_login = '',
+        $user_password = ''
+    ) {
+        parent::__construct($level, $bubble, $application_scope, $application_id, $application_secret, $domain,
+            $user_login, $user_password);
         $this->setUserID($user_id);
         $this->setChatID($chat_id);
         $this->setSystem($system);

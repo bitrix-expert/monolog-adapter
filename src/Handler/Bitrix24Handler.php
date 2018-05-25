@@ -27,6 +27,8 @@ class Bitrix24Handler extends AbstractProcessingHandler
      * @param string $application_id Code of created local application in bitrix24 (****.bitrix24.ru/marketplace/local/list/)
      * @param string $application_secret
      * @param string $domain Your b24 domain, example: b24-aqm4rt.bitrix24.ru
+     * @param string $user_login - account of user, on behalf of which messages will be sent
+     * @param string $user_password
      */
     public function __construct(
         $level = Logger::DEBUG,
@@ -34,7 +36,9 @@ class Bitrix24Handler extends AbstractProcessingHandler
         $application_scope = '',
         $application_id = '',
         $application_secret = '',
-        $domain = ''
+        $domain = '',
+        $user_login = "",
+        $user_password = ""
     ) {
         parent::__construct($level, $bubble);
 
@@ -43,6 +47,8 @@ class Bitrix24Handler extends AbstractProcessingHandler
         $obB24App->setApplicationScope($application_scope);
         $obB24App->setApplicationId($application_id);
         $obB24App->setApplicationSecret($application_secret);
+
+        $obB24App->setUserAccount($user_login, $user_password);
 
         $obB24App->setRedirectUri($this->getCurrentPage());
 

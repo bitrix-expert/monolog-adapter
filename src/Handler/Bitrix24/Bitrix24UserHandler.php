@@ -30,12 +30,23 @@ class Bitrix24UserHandler extends Bitrix24Handler
      * @param string $domain
      * @param string $notify_type
      * @param string $user_id
+     * @param string $user_login
+     * @param string $user_password
      */
-    public function __construct($level = Logger::DEBUG, $bubble = true,
-        $application_scope = '', $application_id = '', $application_secret = '', $domain = '', $notify_type = 'SYSTEM',
-        $user_id = '')
-    {
-        parent::__construct($level, $bubble, $application_scope, $application_id, $application_secret, $domain);
+    public function __construct(
+        $level = Logger::DEBUG,
+        $bubble = true,
+        $application_scope = '',
+        $application_id = '',
+        $application_secret = '',
+        $domain = '',
+        $notify_type = 'SYSTEM',
+        $user_id = '',
+        $user_login = '',
+        $user_password = ''
+    ) {
+        parent::__construct($level, $bubble, $application_scope, $application_id, $application_secret, $domain,
+            $user_login, $user_password);
         $this->setNotifyType($notify_type);
         $this->setUserID($user_id);
     }
